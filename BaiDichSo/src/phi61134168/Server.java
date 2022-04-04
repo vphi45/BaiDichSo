@@ -89,20 +89,6 @@ public static void main(String[] args) throws IOException{
             }
 
            
-    }
-
-    catch(Exception e) {
-
-        dos.close();
-
-        serverSocket.close();
-
-        dis.close();
-
-        System.out.print(e.getMessage());
-
-    }
-
-}
+     }
 
 }
