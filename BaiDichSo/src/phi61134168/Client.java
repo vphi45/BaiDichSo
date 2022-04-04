@@ -70,21 +70,7 @@ public class Client
 
             }
 
-        }
-
-        catch(Exception e) {
-
-            System.out.print("Ngắt kết nối");
-
-            dis.close();
-
-            dos.close();
-
-            mySocket.close();
-
-            e.printStackTrace();
-
-        }
+      
 
     }
 
