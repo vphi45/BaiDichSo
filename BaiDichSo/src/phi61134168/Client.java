@@ -1,77 +1,43 @@
-package phi61134168;
+package cntt61.p61134168;
 
-import java.io.DataInputStream;
-
-import java.io.DataOutputStream;
-
-import java.io.IOException;
-
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.Socket;
-
 import java.util.Scanner;
 
+public class Client {
+	public static void main(String[] args) {
+		try {
+			
+			Socket socket = new Socket("localhost",5555);
+			System.out.print("Conected!");
+			InputStream in = socket.getInputStream();
+			InputStreamReader inReader = new InputStreamReader(in);
+			BufferedReader buffR = new BufferedReader(inReader);
 
+			OutputStream osToClient = socket.getOutputStream();	
+			OutputStreamWriter write2Client = new OutputStreamWriter(osToClient);
+			BufferedWriter buffW = new BufferedWriter(write2Client);
 
-
-
-
-
-public class Client
-
-{
-
-
-
-   
-
-    public static void main(String[] args) throws IOException
-
-    {
-
-    // TODO code application logic here
-
-   
-
-        Socket mySocket = null;
-
-        DataOutputStream dos = null;
-
-        DataInputStream dis=null;
-
-       
-
-        try {
-
-            mySocket = new Socket("localhost", 8989);
-
-            dos = new DataOutputStream(mySocket.getOutputStream());
-
-            dis = new DataInputStream(mySocket.getInputStream());
-
-            Scanner input = new Scanner(System.in);
-
-            String s = null;
-
-            while(true)
-
-            {
-
-                System.out.print("\nNhập dữ liệu: ");
-
-                s =input.nextLine();
-
-                dos.writeUTF(s);
-
-               
-
-                String str=dis.readUTF();
-
-                System.out.print("Kết quả từ Server : "+str);
-
-            }
-
-      catch(Exception e)
-
-    }
+			Scanner banPhim = new Scanner(System.in);
+			while(true) {
+				System.out.print("\nClient:");
+				String chuoiGui = banPhim.nextLine();
+				buffW.write(chuoiGui+"\n");
+				buffW.flush();
+				String chuoiNhan = buffR.readLine();
+				System.out.print("Server: "+ chuoiNhan);
+				if(chuoiGui.equals("10")) break;
+			}
+			socket.close();
+			
+		}catch(Exception e) {
+			System.out.print(e.getMessage());
+		}
+	}
 
 }
