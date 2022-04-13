@@ -1,94 +1,90 @@
-package phi61134168;
+package cntt61.p61134168;
 
-import java.io.DataInputStream;
-
-import java.io.DataOutputStream;
-
-import java.io.IOException;
-
-import java.net.ServerSocket;
-
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.Socket;
 
-
-
-
-
-public class Server {
-
-private static ServerSocket serverSocket = null;
-
-public static void main(String[] args) throws IOException{
-
-// TODO code application logic here
-
-
-
-    DataOutputStream dos = null;
-
-    DataInputStream dis=null;
-
-    try {
-
-        serverSocket = new ServerSocket(8989);
-
-        System.out.print("Server đã được mở \n" );
-
-        Socket clientSocket = null;
-
-        clientSocket = serverSocket.accept();
-
-        dos=new DataOutputStream(clientSocket.getOutputStream());
-
-        dis=new DataInputStream(clientSocket.getInputStream());
-
-        String inline="";
-
-        while(true)
-
-        {
-
-            inline = dis.readUTF();
-
-            char ch[]=inline.toCharArray();
-
-            if(Character.isDigit(ch[0]))
-
-                {
-
-                int i=Integer.parseInt(inline);
-
-                switch(i)
-
-                {
-
-                    case 0:inline="Zero";break;
-
-                    case 1:inline="One";break;
-
-                    case 2:inline="Two";break;
-
-                    case 3:inline="Three";break;
-
-                    case 4:inline="Four";break;
-
-                    case 5:inline="Five";break;
-
-                    case 6:inline="Six";break;
-
-                    case 7:inline="Seven";break;
-
-                    case 8:inline="Eight";break;
-
-                    case 9:inline="Nine";break;
-
-                }
-
-                dos.writeUTF(inline);
-
-            }
-
-          catch(Exception e) 
-     }
-
+public class DichSo extends Thread{
+	Socket socketClient;
+	int id = -1;
+	public DichSo(Socket socketClient, int id) {
+		super();
+		this.socketClient = socketClient;
+		this.id = id;
+	}
+	public void run() {
+		try {
+			System.out.print(socketClient.getInetAddress().getHostAddress());
+			System.out.print(id);
+			
+			OutputStream osToClient = socketClient.getOutputStream();
+			OutputStreamWriter write2client = new OutputStreamWriter(osToClient);
+			BufferedWriter buffW = new BufferedWriter(write2client);
+			
+			InputStream in = socketClient.getInputStream();
+			InputStreamReader inReader = new InputStreamReader(in);
+			BufferedReader buffR = new BufferedReader(inReader);
+			
+			while(true){
+				String chuoiNhan=buffR.readLine();
+				System.out.print("\n"+chuoiNhan);
+				
+				if(chuoiNhan.equals("0")) {
+					String chuoiGui= "zero";
+					buffW.write(chuoiGui+"\n");
+					buffW.flush();
+				}else if(chuoiNhan.equals("1")) {
+					String chuoiGui= "one";
+					buffW.write(chuoiGui+"\n");
+					buffW.flush();
+				}else if(chuoiNhan.equals("2")) {
+					String chuoiGui= "two";
+					buffW.write(chuoiGui+"\n");
+					buffW.flush();
+				}else if(chuoiNhan.equals("3")) {
+					String chuoiGui= "three";
+					buffW.write(chuoiGui+"\n");
+					buffW.flush();
+				}else if(chuoiNhan.equals("4")) {
+					String chuoiGui= "four";
+					buffW.write(chuoiGui+"\n");
+					buffW.flush();
+				}else if(chuoiNhan.equals("5")) {
+					String chuoiGui= "five";
+					buffW.write(chuoiGui+"\n");
+					buffW.flush();
+				}else if(chuoiNhan.equals("6")) {
+					String chuoiGui= "six";
+					buffW.write(chuoiGui+"\n");
+					buffW.flush();
+				}else if(chuoiNhan.equals("7")) {
+					String chuoiGui= "seven";
+					buffW.write(chuoiGui+"\n");
+					buffW.flush();
+				}else if(chuoiNhan.equals("8")) {
+					String chuoiGui= "eight";
+					buffW.write(chuoiGui+"\n");
+					buffW.flush();
+				}else if(chuoiNhan.equals("9")) {
+					String chuoiGui= "night";
+					buffW.write(chuoiGui+"\n");
+					buffW.flush();
+				}else if(chuoiNhan.equals("10")) {
+					String chuoiGui= "ten";
+					buffW.write(chuoiGui+"\n");
+					buffW.flush();
+					break;
+				}
+				
+			}
+			socketClient.close();
+			
+		}catch(Exception e) {
+			System.out.print(e.getMessage());
+		}
+	}
 }
